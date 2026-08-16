@@ -1,6 +1,6 @@
 # Portfolio Website — Cassie Charlie
 
-Personal portfolio website showcasing my research, projects, and experience in machine learning, generative AI, and data analytics.
+Personal portfolio website showcasing my research, projects, and experience in generative AI, deep learning, and speech processing.
 
 🔗 **Live Site:** [https://imkcch.github.io/portfolio](https://imkcch.github.io/portfolio)
 
@@ -8,34 +8,49 @@ Personal portfolio website showcasing my research, projects, and experience in m
 
 ## About
 
-This portfolio serves as a central hub for my professional work as a final-year Computer Science student at National Dong Hwa University, Research Assistant at MPLL, and aspiring Data Analyst & ML/AI engineer.
+This single-page portfolio serves as a central hub for my professional work as a Computer Science graduate from National Dong Hwa University, AI Speech Technology Intern, and NSTC-funded researcher.
 
-**Built with:**
-- HTML5, CSS3, JavaScript (vanilla)
-- Dark/Light theme toggle
-- Fully responsive design
-- GitHub Pages deployment
+---
+
+## Features
+
+- **Dark/Light theme** — Toggle with persistent preference (localStorage)
+- **Click to enlarge** — All images open in a lightbox overlay
+- **Smooth scrolling** — Navigation links scroll to sections
+- **Active nav highlighting** — Current section highlighted on scroll
+- **Fully responsive** — Works on desktop, tablet, and mobile
 
 ---
 
 ## Project Structure
 
-- `index.html` — Home page
-- `about.html` — Bio & skills
-- `projects.html` — Projects grid
-- `style.css` — Styles & themes
-- `script.js` — Theme toggle
-- `assets/` — Images, resume, icons
+```
+portfolio/
+├── index.html
+├── assets/
+│   ├── profile.jpeg
+│   ├── full-body.jpeg
+│   ├── project-emoscale.jpeg
+│   ├── project-deepfake.jpeg
+│   ├── project-survey.png
+│   ├── resume.pdf
+│   ├── google-gmail-svgrepo-com.svg
+│   ├── github-svgrepo-com.svg
+│   └── linkedin-svgrepo-com.svg
+└── README.md
+```
 
 ---
 
-## Featured Projects on This Site
+## Sections
 
-| Project | Tech Stack |
-|---------|-------------|
-| EmoScale — Emotional Speech Synthesis | PyTorch, Diffusion Models, HuBERT, Wav2Vec2 |
-| Audio Deepfake Enhancement | DR-DiffuSE, Speech Enhancement |
-| Hotel Revenue Analysis | SQL, Power BI, DAX |
+| Section | Content |
+|---------|---------|
+| **Home** | Hero with tagline, photo, and CTA buttons |
+| **About** | Bio, photo, and current status (graduated, working, publishing) |
+| **Projects** | 3 project cards with tech tags and GitHub links |
+| **Skills** | Programming languages, frameworks, and tools |
+| **Contact** | Email, GitHub, and LinkedIn with original icon colors |
 
 ---
 
@@ -45,6 +60,24 @@ This portfolio serves as a central hub for my professional work as a final-year 
 # Clone the repository
 git clone https://github.com/imkcch/portfolio.git
 
-# Open any HTML file directly in your browser
+# Navigate to the folder
+cd portfolio
+
+# Open index.html directly in your browser
 # Or use a local server:
 python -m http.server 8000
+```
+
+Then open `http://localhost:8000` in your browser.
+
+---
+
+## Deployment
+
+This site is deployed via **GitHub Pages** from the `main` branch. Any push to `main` automatically updates the live site.
+
+---
+
+## License
+
+© 2026 Cassie Charlie. All rights reserved.

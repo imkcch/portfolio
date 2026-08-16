@@ -5,9 +5,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cassie Charlie — Portfolio</title>
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Hero layout with photo ── */
+    /* ── CSS Variables ── */
+    :root {
+      --color-bg-primary: #ffffff;
+      --color-bg-secondary: #f8fafc;
+      --color-text-primary: #0f172a;
+      --color-text-secondary: #475569;
+      --color-text-muted: #94a3b8;
+      --color-border: #e2e8f0;
+      --color-accent: #4f8cf7;
+      --color-accent-hover: #3b72d9;
+      --color-accent-soft: rgba(79, 140, 247, 0.12);
+      --color-card-bg: #ffffff;
+      --font-family: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-size-xs: 0.8rem;
+      --font-size-sm: 0.95rem;
+      --font-size-md: 1.1rem;
+      --font-size-lg: 1.35rem;
+      --font-size-xl: 1.6rem;
+      --font-size-2xl: 2.6rem;
+      --font-weight-normal: 400;
+      --font-weight-semibold: 600;
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --spacing-2xl: 3.5rem;
+      --radius: 8px;
+      --radius-lg: 12px;
+      --transition-smooth: 0.3s ease;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+    }
+
+    [data-theme="dark"] {
+      --color-bg-primary: #0f172a;
+      --color-bg-secondary: #1e293b;
+      --color-text-primary: #f1f5f9;
+      --color-text-secondary: #94a3b8;
+      --color-text-muted: #64748b;
+      --color-border: #334155;
+      --color-accent: #7b9eff;
+      --color-accent-hover: #93bbfc;
+      --color-accent-soft: rgba(123, 158, 255, 0.15);
+      --color-card-bg: #1e293b;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    /* ── Reset & Base ── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-family);
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      line-height: 1.7;
+      transition: background-color var(--transition-smooth), color var(--transition-smooth);
+      padding-top: 72px;
+    }
+    a { color: var(--color-accent); text-decoration: none; transition: color var(--transition-smooth); }
+    a:hover { color: var(--color-accent-hover); }
+    img { max-width: 100%; display: block; }
+
+    /* ── Container ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--spacing-2xl) var(--spacing-lg);
+    }
+    .container-sm {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--spacing-2xl) var(--spacing-lg);
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0 var(--spacing-lg);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      transition: background var(--transition-smooth), border-color var(--transition-smooth);
+    }
+    .navbar-content {
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar-logo {
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-lg);
+      color: var(--color-text-primary);
+    }
+    .navbar-logo:hover { color: var(--color-accent); }
+    .navbar-links {
+      list-style: none;
+      display: flex;
+      gap: var(--spacing-lg);
+      align-items: center;
+    }
+    .navbar-links a {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+      transition: color var(--transition-smooth);
+    }
+    .navbar-links a:hover { color: var(--color-accent); }
+    .navbar-links a.active {
+      color: var(--color-accent);
+      font-weight: var(--font-weight-semibold);
+    }
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 0.35rem 0.7rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background var(--transition-smooth), border-color var(--transition-smooth);
+      background: var(--color-bg-secondary);
+      color: var(--color-text-primary);
+      line-height: 1;
+    }
+    .theme-toggle:hover {
+      border-color: var(--color-accent);
+    }
+
+    @media (max-width: 640px) {
+      .navbar-links li:not(:last-child) { display: none; }
+      .navbar-links li:last-child { margin-left: auto; }
+    }
+
+    /* ── Hero ── */
     .hero {
       display: flex;
       flex-direction: row;
@@ -15,21 +158,32 @@
       align-items: center;
       gap: var(--spacing-2xl);
       text-align: left;
-      min-height: calc(100vh - 80px - 80px);
-      padding: var(--spacing-2xl) var(--spacing-lg);
-      max-width: 1200px;
+      min-height: calc(100vh - 72px - 80px);
+      padding: var(--spacing-xl) var(--spacing-lg);
+      max-width: 1100px;
       margin: 0 auto;
     }
- 
-    .hero-text {
-      flex: 1;
-      max-width: 560px;
-    }
- 
+    .hero-text { flex: 1; max-width: 560px; }
     .hero-text h1 {
+      font-size: var(--font-size-2xl);
       margin-bottom: var(--spacing-sm);
     }
- 
+    .hero-tagline {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-sm);
+    }
+    .hero-sub {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-md);
+      margin-bottom: var(--spacing-lg);
+    }
+    .hero-actions {
+      display: flex;
+      gap: var(--spacing-md);
+      flex-wrap: wrap;
+      align-items: center;
+    }
     .hero-photo {
       flex-shrink: 0;
       width: 240px;
@@ -37,151 +191,701 @@
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid var(--color-accent);
-      box-shadow: 0 0 32px rgba(37, 99, 235, 0.2);
+      box-shadow: 0 0 40px var(--color-accent-soft);
     }
- 
     .hero-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
- 
-    /* Fallback placeholder circle if no image yet */
-    .hero-photo-placeholder {
-      width: 100%;
-      height: 100%;
-      background-color: var(--color-bg-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 5rem;
-    }
- 
-    .hero-actions {
-      display: flex;
-      gap: var(--spacing-md);
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: var(--spacing-lg);
-    }
- 
-    /* ── Snapshot cards ── */
-    .snapshot-section {
-      background-color: var(--color-bg-secondary);
-      border-top: 1px solid var(--color-border);
-      border-bottom: 1px solid var(--color-border);
-      padding: var(--spacing-2xl) var(--spacing-lg);
-      transition: background-color var(--transition-smooth),
-                  border-color var(--transition-smooth);
-    }
- 
-    /* ── Responsive ── */
     @media (max-width: 768px) {
       .hero {
         flex-direction: column-reverse;
         text-align: center;
         gap: var(--spacing-xl);
         min-height: auto;
+        padding-top: var(--spacing-xl);
       }
- 
-      .hero-photo {
-        width: 160px;
-        height: 160px;
-      }
- 
-      .hero-actions {
-        justify-content: center;
-      }
+      .hero-photo { width: 180px; height: 180px; }
+      .hero-actions { justify-content: center; }
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.6rem;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      font-family: var(--font-family);
+      border-radius: var(--radius);
+      border: 1px solid var(--color-accent);
+      background: var(--color-accent);
+      color: #fff;
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      text-align: center;
+    }
+    .btn:hover {
+      background: var(--color-accent-hover);
+      border-color: var(--color-accent-hover);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-text-primary);
+      border-color: var(--color-border);
+    }
+    .btn-secondary:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      background: transparent;
+    }
+    .btn-sm { padding: 0.4rem 1.1rem; font-size: var(--font-size-xs); }
+
+    /* ── Section Titles ── */
+    .section-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      text-align: center;
+      margin-bottom: var(--spacing-sm);
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-md);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    /* ── Divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 0;
+    }
+
+    /* ── About Section ── */
+    .about-grid {
+      display: flex;
+      gap: var(--spacing-2xl);
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .about-grid > div:first-child { flex: 1; min-width: 280px; }
+    .about-grid p {
+      font-size: var(--font-size-md);
+      margin-bottom: var(--spacing-md);
+    }
+    .about-grid p:last-child { margin-bottom: 0; }
+    .about-grid > div:last-child {
+      flex-shrink: 0;
+      width: 220px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 2px solid var(--color-accent);
+    }
+    .about-grid > div:last-child img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+    @media (max-width: 640px) {
+      .about-grid { flex-direction: column; align-items: center; }
+      .about-grid > div:last-child { width: 180px; }
+      .about-grid > div:last-child img { height: 220px; }
+    }
+
+    /* ── Status Row (inline under About) ── */
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-xl);
+      margin-top: var(--spacing-xl);
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid var(--color-border);
+    }
+    .status-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+      flex: 1 1 180px;
+    }
+    .status-icon {
+      font-size: var(--font-size-lg);
+      line-height: 1.4;
+      flex-shrink: 0;
+    }
+    .status-content strong {
+      display: block;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-semibold);
+    }
+    .status-content span {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-primary);
+    }
+    @media (max-width: 640px) {
+      .status-row { flex-direction: column; gap: var(--spacing-md); }
+      .status-item { flex: 1 1 auto; }
+    }
+
+    /* ── Projects Grid ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: var(--spacing-xl);
+    }
+
+    /* ── Project Card ── */
+    .project-card {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition-smooth);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+    .project-image {
+      width: 100%;
+      height: 210px;
+      background: var(--color-bg-secondary);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .project-image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+      text-align: center;
+      padding: var(--spacing-md);
+      background: var(--color-bg-secondary);
+      width: 100%;
+      height: 100%;
+    }
+    .project-image-placeholder .icon {
+      font-size: 2.8rem;
+      margin-bottom: var(--spacing-sm);
+      opacity: 0.5;
+    }
+    .project-image-placeholder .label {
+      background: var(--color-border);
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-secondary);
+    }
+    .project-body {
+      padding: var(--spacing-lg);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-body h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--spacing-sm);
+      line-height: 1.4;
+    }
+    .project-body p {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--spacing-md);
+      flex: 1;
+      line-height: 1.7;
+    }
+    .project-meta {
+      font-size: var(--font-size-sm);
+      color: var(--color-accent);
+      margin-bottom: var(--spacing-md);
+    }
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-xs);
+      margin-bottom: var(--spacing-md);
+    }
+    .project-tech-tag {
+      background: var(--color-accent-soft);
+      color: var(--color-accent);
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      transition: background var(--transition-smooth), color var(--transition-smooth);
+    }
+    [data-theme="dark"] .project-tech-tag {
+      background: rgba(123, 158, 255, 0.15);
+    }
+    .project-body .btn { align-self: flex-start; margin-top: auto; }
+
+    /* ── Skills Section ── */
+    .skills-section {
+      background: var(--color-bg-secondary);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--spacing-2xl) var(--spacing-lg);
+      transition: background var(--transition-smooth), border-color var(--transition-smooth);
+    }
+    .skills-group h3 {
+      text-align: center;
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-md);
+      color: var(--color-text-secondary);
+    }
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-xl);
+    }
+    .skill-tag {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      padding: 0.35rem 1.1rem;
+      border-radius: 20px;
+      font-size: var(--font-size-sm);
+      transition: all var(--transition-smooth);
+      color: var(--color-text-primary);
+    }
+    .skill-tag:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    /* ── Contact Section ── */
+    .contact-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-md);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-md);
+      transition: color var(--transition-smooth);
+    }
+    .contact-item:hover { color: var(--color-accent); }
+    .contact-item img {
+      width: 22px;
+      height: 22px;
+      filter: none;
+      transition: opacity var(--transition-smooth);
+    }
+    .contact-item:hover img {
+      opacity: 0.8;
+    }
+    .contact-item a {
+      color: var(--color-text-secondary);
+      transition: color var(--transition-smooth);
+    }
+    .contact-item a:hover { color: var(--color-accent); }
+
+    /* ── Lightbox / Click to enlarge ── */
+    .clickable-image {
+      cursor: pointer;
+      transition: transform var(--transition-smooth);
+    }
+    .clickable-image:hover {
+      transform: scale(1.02);
+    }
+
+    .lightbox-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-2xl);
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+    .lightbox-overlay.active {
+      display: flex;
+    }
+    .lightbox-overlay img {
+      max-width: 90%;
+      max-height: 85vh;
+      border-radius: var(--radius-lg);
+      border: 2px solid var(--color-border);
+      object-fit: contain;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: var(--spacing-xl) var(--spacing-lg);
+      text-align: center;
+      transition: border-color var(--transition-smooth);
+    }
+    .footer-content { max-width: 1100px; margin: 0 auto; }
+    .footer-copyright {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+
+    /* ── Responsive tweaks ── */
+    @media (max-width: 480px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .hero-text h1 { font-size: var(--font-size-xl); }
+      .container { padding: var(--spacing-xl) var(--spacing-md); }
+      .skills-section { padding: var(--spacing-xl) var(--spacing-md); }
     }
   </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
+
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar">
     <div class="navbar-content">
-      <a href="index.html" class="navbar-logo">Cassie Charlie</a>
+      <a href="#" class="navbar-logo">Cassie Charlie</a>
       <ul class="navbar-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="projects.html">Projects</a></li>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
       <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀️</button>
     </div>
   </nav>
 
-  <!-- Main Content -->
+  <!-- ===== MAIN ===== -->
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-text fade-in">
-        <p style="color: var(--color-accent); font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-sm); font-size: var(--font-size-sm);">
+
+    <!-- ===== HERO ===== -->
+    <section id="home" class="hero">
+      <div class="hero-text">
+        <p style="color: var(--color-accent); font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-xs); font-size: var(--font-size-md);">
           Hi, I'm
         </p>
         <h1>Cassie Charlie</h1>
-        <p class="hero-tagline">
-          CS student building at the edge of generative AI and audio.
-        </p>
-        <p style="color: var(--color-text-secondary); font-size: var(--font-size-sm); margin-bottom: 0;">
-          Research Assistant at MPLL, NDHU · Open to ML &amp; Data roles
-        </p>
+        <p class="hero-tagline">AI Engineer · Generative AI · Deep Learning</p>
+        <p class="hero-sub">NSTC-Funded Researcher · NDHU CS Graduate</p>
         <div class="hero-actions">
-          <a href="projects.html" class="btn">View My Work</a>
-          <a href="about.html" class="btn btn-secondary">About Me</a>
+          <a href="#projects" class="btn">View My Work</a>
+          <a href="#about" class="btn btn-secondary">About Me</a>
           <a href="assets/resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Download CV</a>
         </div>
       </div>
       <div class="hero-photo">
-        <img src="assets/profile.jpeg" alt="Cassie Charlie" />
+        <img src="assets/profile.jpeg" alt="Cassie Charlie" class="clickable-image" />
       </div>
     </section>
 
-    <!-- Snapshot Section -->
-    <section class="container">
-      <h2 class="section-title">Quick Snapshot</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number">NSTC</div>
-          <div class="stat-label">Funded Researcher</div>
+    <hr class="section-divider" />
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="container">
+      <h2 class="section-title">About Me</h2>
+
+      <div class="about-grid">
+        <div>
+          <p>
+            I'm a Computer Science graduate from National Dong Hwa University, specializing in Generative AI, deep learning, and speech processing. As an NSTC grant recipient and Academic Excellence Awardee, I've built research experience in diffusion models, LLMs, and RAG pipelines with a focus on deploying practical AI solutions.
+          </p>
+          <p>
+            Currently, I'm exploring the intersection of generative models and agentic workflows, aiming to build AI systems that are not just intelligent, but truly useful. I'm excited to be part of the next generation of solution builders, turning research into real-world impact.
+          </p>
         </div>
-        <div class="stat-card">
-          <div class="stat-number">3/62</div>
-          <div class="stat-label">Class Rank · NDHU CS 2026</div>
+        <div>
+          <img src="assets/full-body.jpeg" alt="Cassie Charlie" class="clickable-image" />
         </div>
-        <div class="stat-card">
-          <div class="stat-number">IELTS 8.0</div>
-          <div class="stat-label">English Proficiency</div>
+      </div>
+
+      <!-- Status Row (inline, no divider) -->
+      <div class="status-row">
+        <div class="status-item">
+          <span class="status-icon">📚</span>
+          <div class="status-content">
+            <strong>Graduated</strong>
+            <span>B.S. CSIE, NDHU (GPA 4.07/4.5, Rank 3/62)</span>
+          </div>
+        </div>
+        <div class="status-item">
+          <span class="status-icon">🛠️</span>
+          <div class="status-content">
+            <strong>Working as</strong>
+            <span>AI Speech Technology &amp; Software Engineering Intern</span>
+          </div>
+        </div>
+        <div class="status-item">
+          <span class="status-icon">📄</span>
+          <div class="status-content">
+            <strong>Publishing</strong>
+            <span>"Limitations of Cross-Domain Transfer for Audio Deepfake Enhancement"</span>
+          </div>
         </div>
       </div>
     </section>
+
+    <hr class="section-divider" />
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="container">
+      <h2 class="section-title">My Projects</h2>
+      <p class="section-sub">Research and projects in generative AI, deep learning, and speech processing.</p>
+
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="assets/project-emoscale.jpeg" alt="EmoScale architecture diagram" class="clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="project-image-placeholder" style="display:none;">
+              <span class="icon">🧠</span>
+              <span>EmoScale Architecture</span>
+              <span class="label">Placeholder</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>Emotional Speech Synthesis with Intensity Control</h3>
+            <p>
+              A zero-shot framework for emotional speech synthesis that enables fine-grained intensity control without manual labels. Combines self-supervised encoders with a diffusion decoder, using RankNet to learn relative intensity from prosodic features.
+            </p>
+            <div class="project-meta">NTD 48,000 grant · Jul 2025 – Mar 2026</div>
+            <div class="project-tech">
+              <span class="project-tech-tag">Python</span>
+              <span class="project-tech-tag">PyTorch</span>
+              <span class="project-tech-tag">Diffusion</span>
+              <span class="project-tech-tag">HuBERT</span>
+              <span class="project-tech-tag">Wav2Vec2</span>
+            </div>
+            <a href="https://github.com/imkcch/emoscale" class="btn btn-sm" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="assets/project-deepfake.jpeg" alt="Deepfake enhancement pipeline" class="clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="project-image-placeholder" style="display:none;">
+              <span class="icon">🎙️</span>
+              <span>Deepfake Enhancement Pipeline</span>
+              <span class="label">Placeholder</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>Limitations of Cross-Domain Transfer for Audio Deepfake Enhancement</h3>
+            <p>
+              Showed that speech enhancement models trained only to remove noise can make audio deepfakes sound more natural without retraining — demonstrating transferable knowledge beyond their original task.
+            </p>
+            <div class="project-meta">Research Assistant · MPLL, NDHU · Sep 2025 – Mar 2026</div>
+            <div class="project-tech">
+              <span class="project-tech-tag">Python</span>
+              <span class="project-tech-tag">PyTorch</span>
+              <span class="project-tech-tag">DR-DiffuSE</span>
+              <span class="project-tech-tag">Speech Enhancement</span>
+            </div>
+            <a href="https://github.com/imkcch/zero-shot-deepfake-enhancement" class="btn btn-sm" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <div class="project-image">
+            <img src="assets/project-survey.png" alt="Survey Agent interface" class="clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="project-image-placeholder" style="display:none;">
+              <span class="icon">📋</span>
+              <span>Survey Agent UI</span>
+              <span class="label">Placeholder</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>Survey Agent</h3>
+            <p>
+              A Flask-based conversational survey application that guides visitors through questions, validates responses, preserves answers for editing, and stores submissions in Google Sheets.
+            </p>
+            <div class="project-meta">Personal Project · 2026</div>
+            <div class="project-tech">
+              <span class="project-tech-tag">Python</span>
+              <span class="project-tech-tag">Flask</span>
+              <span class="project-tech-tag">Google Sheets API</span>
+              <span class="project-tech-tag">Mock Agent</span>
+            </div>
+            <a href="https://github.com/imkcch/survey_agent_project" class="btn btn-sm" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" class="skills-section">
+      <div class="container-sm">
+        <h2 class="section-title">Skills &amp; Technologies</h2>
+        <p class="section-sub" style="margin-bottom: var(--spacing-xl);">Machine Learning · Deep Learning · Generative AI</p>
+
+        <div class="skills-group">
+          <h3>Programming Languages</h3>
+          <div class="skills-container">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">C</span>
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS</span>
+            <span class="skill-tag">SQL</span>
+          </div>
+        </div>
+
+        <div class="skills-group">
+          <h3>Frameworks &amp; Libraries</h3>
+          <div class="skills-container">
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">NumPy</span>
+            <span class="skill-tag">Matplotlib</span>
+            <span class="skill-tag">Flask</span>
+          </div>
+        </div>
+
+        <div class="skills-group">
+          <h3>Tools &amp; Platforms</h3>
+          <div class="skills-container">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Linux</span>
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">GitHub Copilot</span>
+            <span class="skill-tag">Claude Code</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="container">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <img src="assets/google-gmail-svgrepo-com.svg" alt="" />
+          <a href="mailto:imkc2540@gmail.com">imkc2540@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <img src="assets/github-svgrepo-com.svg" alt="" />
+          <a href="https://github.com/imkcch" target="_blank" rel="noopener noreferrer">github.com/imkcch</a>
+        </div>
+        <div class="contact-item">
+          <img src="assets/linkedin-svgrepo-com.svg" alt="" />
+          <a href="https://www.linkedin.com/in/cassiecharlie/" target="_blank" rel="noopener noreferrer">linkedin.com/in/cassiecharlie</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Footer -->
+  <!-- ===== FOOTER ===== -->
   <footer>
     <div class="footer-content">
-      <ul class="footer-links">
-        <li>
-        <a href="mailto:imkc2540@gmail.com" title="Email" aria-label="Email">
-            <img src="assets/google-gmail-svgrepo-com.svg" alt="Email" width="20" height="20" />
-            Email
-        </a>
-        </li>
-        <li>
-          <a href="https://github.com/imkcch" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
-            <img src="assets/github-svgrepo-com.svg" alt="GitHub" width="20" height="20" />
-            GitHub
-          </a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/in/cassiecharlie/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
-            <img src="assets/linkedin-svgrepo-com.svg" alt="GitHub" width="20" height="20" />
-            LinkedIn
-          </a>
-        </li>
-      </ul>
       <p class="footer-copyright">&copy; 2026 Cassie Charlie. All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Lightbox Overlay -->
+  <div id="lightbox" class="lightbox-overlay" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Enlarged view" />
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // ── Theme Toggle ──
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', currentTheme);
+    toggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+
+    toggle.addEventListener('click', () => {
+      const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // ── Active nav link on scroll ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.navbar-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 120;
+        if (window.scrollY >= top) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ── Fix placeholder images ──
+    document.querySelectorAll('.project-image img').forEach(img => {
+      img.addEventListener('error', function() {
+        this.style.display = 'none';
+        const placeholder = this.nextElementSibling;
+        if (placeholder && placeholder.classList.contains('project-image-placeholder')) {
+          placeholder.style.display = 'flex';
+        }
+      });
+    });
+
+    // ── Lightbox: click to enlarge ──
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.clickable-image').forEach(img => {
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        lightboxImg.src = this.src;
+        lightboxImg.alt = this.alt || 'Enlarged view';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
 </body>
 </html>
